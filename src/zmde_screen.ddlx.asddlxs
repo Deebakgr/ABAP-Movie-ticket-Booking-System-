@@ -1,0 +1,47 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName:       'Screen',
+  typeNamePlural: 'Screens',
+  title:       { type: #STANDARD, value: 'ScreenName' },
+  description: { type: #STANDARD, value: 'ScreenType' }
+}
+
+annotate view ZC_SCREEN with
+{
+  @UI.facet: [
+    {
+      id:       'ScreenDetails',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Screen Details',
+      position: 10
+    }
+  ]
+
+  @UI: { lineItem:       [{ position: 10 }],
+         identification: [{ position: 10 }] }
+  ScreenId;
+
+  @UI: { lineItem:       [{ position: 20 }],
+         identification: [{ position: 20 }],
+         selectionField: [{ position: 10 }] }
+  ScreenName;
+
+  @UI: { lineItem:       [{ position: 30 }],
+         identification: [{ position: 30 }],
+         selectionField: [{ position: 20 }] }
+  ScreenType;
+
+  @UI: { lineItem:       [{ position: 40 }],
+         identification: [{ position: 40 }] }
+  TotalSeats;
+
+  @UI: { lineItem:       [{ position: 50 }],
+         identification: [{ position: 50 }] }
+  Location;
+
+  @UI: { lineItem:       [{ position: 60 }],
+         identification: [{ position: 60 }] }
+  Status;
+}

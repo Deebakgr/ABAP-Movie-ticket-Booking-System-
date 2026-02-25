@@ -1,0 +1,55 @@
+managed implementation in class zbp_i_seat unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_SEAT alias Seat
+persistent table zseat_t
+draft table zseat_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  field ( readonly )
+    SeatId,
+    CreatedBy,
+    CreatedAt,
+    LastChangedBy,
+    LastChangedAt,
+    LocalLastChangedAt;
+
+  field ( mandatory )
+    ScreenId,
+    SeatNumber,
+    SeatRow,
+    SeatCategory;
+
+  field ( numbering : managed ) SeatId;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  draft determine action Prepare;
+
+  determination setDefaultStatus on modify { create; }
+
+  mapping for zseat_t
+  {
+    SeatId             = seat_id;
+    ScreenId           = screen_id;
+    SeatNumber         = seat_number;
+    SeatRow            = seat_row;
+    SeatCategory       = seat_category;
+    Status             = status;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

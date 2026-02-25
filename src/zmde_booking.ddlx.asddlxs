@@ -1,0 +1,170 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName:       'Booking',
+  typeNamePlural: 'Bookings',
+  title:       { type: #STANDARD, value: 'BookingId' },
+  description: { type: #STANDARD, value: 'CustomerName' }
+}
+
+annotate view ZC_BOOKING with
+{
+
+  @UI.facet: [
+    {
+      id:        'BookingDetails',
+      purpose:   #STANDARD,
+      type:      #FIELDGROUP_REFERENCE,
+      label:     'Booking Details',
+      position:  10,
+      targetQualifier: 'BookingGrp'
+    },
+    {
+      id:        'PaymentDetails',
+      purpose:   #STANDARD,
+      type:      #FIELDGROUP_REFERENCE,
+      label:     'Payment Details',
+      position:  20,
+      targetQualifier: 'PaymentGrp'
+    },
+    {
+      id:        'TicketDetails',
+      purpose:   #STANDARD,
+      type:      #FIELDGROUP_REFERENCE,
+      label:     'Ticket Details',
+      position:  30,
+      targetQualifier: 'TicketGrp'
+    }
+  ]
+
+
+  @UI.lineItem: [
+    { position: 10,  label: 'Booking ID' },
+    { type: #FOR_ACTION, dataAction: 'confirmBooking',
+      label: 'Confirm Booking', position: 20 },
+    { type: #FOR_ACTION, dataAction: 'cancelBooking',
+      label: 'Cancel Booking',  position: 30 },
+    { type: #FOR_ACTION, dataAction: 'generateTicket',
+      label: 'Generate Ticket', position: 40 },
+       { type: #FOR_ACTION, dataAction: 'resetTicket',
+    label: 'Reset Ticket',    position: 50 }
+  ]
+
+  @UI.identification: [
+    { position: 10, label: 'Booking ID' },
+    { type: #FOR_ACTION, dataAction: 'confirmBooking',
+      label: 'Confirm Booking', position: 20 },
+    { type: #FOR_ACTION, dataAction: 'cancelBooking',
+      label: 'Cancel Booking',  position: 30 },
+    { type: #FOR_ACTION, dataAction: 'generateTicket',
+      label: 'Generate Ticket', position: 40 },
+      { type: #FOR_ACTION, dataAction: 'resetTicket',
+    label: 'Reset Ticket',    position: 50 } 
+  ]
+  BookingId;
+
+  @UI: {
+    lineItem:       [{ position: 50,  label: 'Show ID' }],
+    fieldGroup:     [{ qualifier: 'BookingGrp', position: 10, label: 'Show ID' }],
+    selectionField: [{ position: 10 }]
+  }
+  ShowId;
+
+  @UI: {
+    lineItem:   [{ position: 60,  label: 'Customer Name' }],
+    fieldGroup: [{ qualifier: 'BookingGrp', position: 20, label: 'Customer Name' }],
+    selectionField: [{ position: 20 }]
+  }
+  CustomerName;
+
+  @UI: {
+    lineItem:   [{ position: 70,  label: 'Email' }],
+    fieldGroup: [{ qualifier: 'BookingGrp', position: 30, label: 'Customer Email' }]
+  }
+  CustomerEmail;
+
+  @UI: {
+    lineItem:   [{ position: 80,  label: 'Phone' }],
+    fieldGroup: [{ qualifier: 'BookingGrp', position: 40, label: 'Customer Phone' }]
+  }
+  CustomerPhone;
+
+  @UI: {
+    lineItem:   [{ position: 90,  label: 'Booking Date' }],
+    fieldGroup: [{ qualifier: 'BookingGrp', position: 50, label: 'Booking Date' }]
+  }
+  BookingDate;
+
+  @UI: {
+    lineItem:   [{ position: 100, label: 'Booking Status' }],
+    fieldGroup: [{ qualifier: 'BookingGrp', position: 60, label: 'Booking Status' }]
+  }
+  BookingStatus;
+
+  @UI: {
+    lineItem:   [{ position: 110, label: 'No. of Tickets' }],
+    fieldGroup: [{ qualifier: 'PaymentGrp', position: 10, label: 'No. of Tickets' }]
+  }
+  NoOfTickets;
+
+  @UI: {
+    lineItem:   [{ position: 120, label: 'Total Amount' }],
+    fieldGroup: [{ qualifier: 'PaymentGrp', position: 20, label: 'Total Amount' }]
+  }
+  TotalAmount;
+
+  @UI: {
+    lineItem:   [{ position: 130, label: 'Payment Mode' }],
+    fieldGroup: [{ qualifier: 'PaymentGrp', position: 30, label: 'Payment Mode' }]
+  }
+  PaymentMode;
+
+  @UI: {
+    lineItem:   [{ position: 140, label: 'Payment Status' }],
+    fieldGroup: [{ qualifier: 'PaymentGrp', position: 40, label: 'Payment Status' }]
+  }
+  PaymentStatus;
+
+
+  @UI: {
+    lineItem:   [{ position: 150, label: 'Ticket Number' }],
+    fieldGroup: [{ qualifier: 'TicketGrp', position: 10, label: 'Ticket Number' }]
+  }
+  TicketNumber;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 20, label: 'Movie Name' }]
+  TicketMovieName;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 30, label: 'Screen Name' }]
+  TicketScreenName;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 40, label: 'Seat Number' }]
+  TicketSeatNumber;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 50, label: 'Seat Row' }]
+  TicketSeatRow;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 60, label: 'Seat Category' }]
+  TicketSeatCategory;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 70, label: 'Show Date' }]
+  TicketShowDate;
+
+  @UI.fieldGroup: [{ qualifier: 'TicketGrp', position: 80, label: 'Show Time' }]
+  TicketShowTime;
+
+  @UI.hidden: true
+  MovieId;
+
+  @UI.hidden: true
+  ScreenId;
+
+@UI: {
+    lineItem:   [{ position: 55, label: 'Seat ID' }],
+    fieldGroup: [{ qualifier: 'BookingGrp', position: 15, label: 'Seat ID' }]
+  }
+  SeatId;
+
+  @UI.hidden: true
+  TicketGenerated;
+}

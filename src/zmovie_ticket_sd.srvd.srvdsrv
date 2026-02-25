@@ -1,0 +1,8 @@
+@EndUserText.label: 'Movie Ticketing Service Definition'
+define service ZMOVIE_TICKET_SD {
+  expose ZC_MOVIE   as Movie;
+  expose ZC_SCREEN  as Screen;
+  expose ZC_SEAT    as Seat;
+  expose ZC_SHOW    as Show;
+  expose ZC_BOOKING as Booking;
+}

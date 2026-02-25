@@ -1,0 +1,69 @@
+managed implementation in class zbp_i_show unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_SHOW alias Show
+persistent table zshow_t
+draft table zshow_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  field ( readonly )
+    ShowId,
+    CreatedBy,
+    CreatedAt,
+    LastChangedBy,
+    LastChangedAt,
+    LocalLastChangedAt;
+
+  field ( mandatory )
+    MovieId,
+    ScreenId,
+    ShowDate,
+    ShowTime,
+    TicketPrice;
+
+  field ( numbering : managed ) ShowId;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  draft determine action Prepare
+  {
+    validation validateShowDate;
+    validation validateTicketPrice;
+  }
+
+  action cancelShow result [1] $self;
+
+  validation validateShowDate    on save { create; update; }
+  validation validateTicketPrice on save { create; update; }
+
+  determination setAvailableSeats on modify { create; }
+  determination setDefaultStatus  on modify { create; }
+
+  mapping for zshow_t
+  {
+    ShowId             = show_id;
+    MovieId            = movie_id;
+    ScreenId           = screen_id;
+    ShowDate           = show_date;
+    ShowTime           = show_time;
+    TicketPrice        = ticket_price;
+    AvailableSeats     = available_seats;
+    TotalSeats         = total_seats;
+    Status             = status;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

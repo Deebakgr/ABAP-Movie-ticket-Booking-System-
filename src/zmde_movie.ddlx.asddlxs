@@ -1,0 +1,66 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName:       'Movie',
+  typeNamePlural: 'Movies',
+  title:       { type: #STANDARD, value: 'MovieName' },
+  description: { type: #STANDARD, value: 'Genre' }
+}
+
+annotate view ZC_MOVIE with
+{
+  @UI.facet: [
+    {
+      id:       'MovieDetails',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Movie Details',
+      position: 10
+    }
+  ]
+
+  @UI: { lineItem:       [{ position: 10, label: 'Movie ID' }],
+         identification: [{ position: 10, label: 'Movie ID' }] }
+  MovieId;
+
+  @UI: { lineItem:       [{ position: 20, label: 'Movie Name' }],
+         identification: [{ position: 20, label: 'Movie Name' }],
+         selectionField: [{ position: 10 }] }
+  MovieName;
+
+  @UI: { lineItem:       [{ position: 30 }],
+         identification: [{ position: 30 }],
+         selectionField: [{ position: 20 }] }
+  Genre;
+
+  @UI: { lineItem:       [{ position: 40 }],
+         identification: [{ position: 40 }],
+         selectionField: [{ position: 30 }] }
+  Language;
+
+  @UI: { lineItem:       [{ position: 50 }],
+         identification: [{ position: 50 }] }
+  Rating;
+
+  @UI: { lineItem:       [{ position: 60 }],
+         identification: [{ position: 60 }] }
+  ReleaseDate;
+
+  @UI: { lineItem:       [{ position: 70 }],
+         identification: [{ position: 70 }] }
+  DurationMins;
+
+  @UI: { lineItem:       [{ position: 80 }],
+         identification: [{ position: 80 }] }
+  Director;
+
+  @UI.identification: [{ position: 90 }]
+  Description;
+
+  @UI.identification: [{ position: 100 }]
+  CastMembers;
+
+  @UI: { lineItem:       [{ position: 110 }],
+         identification: [{ position: 110 }] }
+  Status;
+}

@@ -1,0 +1,58 @@
+managed implementation in class zbp_i_screen unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_SCREEN alias Screen
+persistent table zscreen_t
+draft table zscreen_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  field ( readonly )
+    ScreenId,
+    CreatedBy,
+    CreatedAt,
+    LastChangedBy,
+    LastChangedAt,
+    LocalLastChangedAt;
+
+  field ( mandatory )
+    ScreenName,
+    TotalSeats,
+    ScreenType;
+
+  field ( numbering : managed ) ScreenId;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  draft determine action Prepare
+  {
+    validation validateTotalSeats;
+  }
+
+  validation validateTotalSeats  on save { create; update; }
+  determination setDefaultStatus on modify { create; }
+
+  mapping for zscreen_t
+  {
+    ScreenId           = screen_id;
+    ScreenName         = screen_name;
+    TotalSeats         = total_seats;
+    ScreenType         = screen_type;
+    Location           = location;
+    Status             = status;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

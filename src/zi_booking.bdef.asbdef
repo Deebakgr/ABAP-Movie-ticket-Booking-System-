@@ -1,0 +1,106 @@
+managed implementation in class zbp_i_booking unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_BOOKING alias Booking
+persistent table zbooking_t
+draft table zbooking_d
+lock master total etag LastChangedAt
+authorization master ( global )
+etag master LocalLastChangedAt
+{
+  field ( readonly )
+    BookingId,
+    MovieId,
+    ScreenId,
+    CreatedBy,
+    CreatedAt,
+    LastChangedBy,
+    LastChangedAt,
+    LocalLastChangedAt,
+    TotalAmount,
+    BookingDate,
+    TicketNumber,
+    TicketGenerated,
+    TicketMovieName,
+    TicketScreenName,
+    TicketSeatNumber,
+    TicketSeatRow,
+    TicketSeatCategory,
+    TicketShowDate,
+    TicketShowTime;
+  field ( mandatory )
+    ShowId,
+    CustomerName,
+    CustomerEmail,
+    CustomerPhone,
+    NoOfTickets,
+    PaymentMode,
+    SeatId;
+
+  field ( numbering : managed ) BookingId;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  draft determine action Prepare
+  {
+    validation validateCustomerEmail;
+    validation validateCustomerPhone;
+    validation validateNoOfTickets;
+    validation validateSeatAvailability;
+  }
+
+  action confirmBooking  result [1] $self;
+  action cancelBooking   result [1] $self;
+  action generateTicket  result [1] $self;
+  action resetTicket result [1] $self;
+
+  validation validateCustomerEmail    on save { create; update; }
+  validation validateCustomerPhone    on save { create; update; }
+  validation validateNoOfTickets      on save { create; }
+  validation validateSeatAvailability on save { create; }
+
+  determination calculateTotalAmount on modify { field ShowId; field NoOfTickets; }
+  determination setBookingDate       on modify { create; }
+  determination setDefaultStatus     on modify { create; }
+  determination updateShowSeats      on save   { create; }
+
+  mapping for zbooking_t
+  {
+    BookingId          = booking_id;
+    ShowId             = show_id;
+    MovieId            = movie_id;
+    ScreenId           = screen_id;
+    SeatId             = seat_id;
+    CustomerName       = customer_name;
+    CustomerEmail      = customer_email;
+    CustomerPhone      = customer_phone;
+    NoOfTickets        = no_of_tickets;
+    TotalAmount        = total_amount;
+    BookingDate        = booking_date;
+    BookingStatus      = booking_status;
+    PaymentStatus      = payment_status;
+    PaymentMode        = payment_mode;
+    TicketNumber          = ticket_number;
+    TicketGenerated       = ticket_generated;
+    TicketMovieName       = ticket_movie_name;
+    TicketScreenName      = ticket_screen_name;
+    TicketSeatNumber      = ticket_seat_number;
+    TicketSeatRow         = ticket_seat_row;
+    TicketSeatCategory    = ticket_seat_category;
+    TicketShowDate        = ticket_show_date;
+    TicketShowTime        = ticket_show_time;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
